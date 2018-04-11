@@ -1,0 +1,29 @@
+#include "mbed.h"
+#include "SRF08.h"
+ 
+SRF08 srf08(p9, p10, 0xE0);      // Define SDA, SCL pin and I2C address
+Serial pc(USBTX, USBRX);
+DigitalOut led1(LED1);
+ 
+
+int main() {
+    
+    while (true) {
+        while(1) {
+            pc.printf("Measured range : %.2f cm\r\n",srf08.read());
+            if  (srf08.read() >=60 )
+            {
+            }
+            else if (srf08.read() >=20 && srf08.read() <60)
+            {
+                led1 = !led1;
+                wait(0.5);
+            }
+            else
+            {
+                led1 = !led1;
+                wait(0.1);
+            }
+        }
+    }
+}
